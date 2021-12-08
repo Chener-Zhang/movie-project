@@ -1,4 +1,4 @@
-export default LOGIN = () => {
+export default USER_LOGIN = () => {
     return {
         type: 'LOGIN'
 
@@ -6,7 +6,7 @@ export default LOGIN = () => {
 }
 
 
-export default LOGOUT = () => {
+export default USER_LOGOUT = () => {
     return {
         type: 'LOGOUT'
 
