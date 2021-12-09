@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { USER_LOGIN } from '../actions/userLoginAction'
-
+import { useSelector } from 'react-redux'
 
 //CSS 
 import '../styles/HomePage.css'
@@ -13,7 +11,7 @@ function Header() {
     function checkIfLog() {
         if (!isLogged.Boolean) {
             return <Link className="login" to="/login">Login</Link>
-        }else{
+        } else {
             //Add if login already code 
         }
     }

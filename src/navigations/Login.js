@@ -55,11 +55,13 @@ export default function Login() {
     }
 
     const checkUserInfo = () => {
-        if (userName == "" || passWord == "") {
+        if (userName === "" || passWord === "") {
             console.log('it empty')
         }
         login();
     }
+
+
 
 
     const userLogged = () => {
@@ -87,7 +89,8 @@ export default function Login() {
     return (
         <div>
             {userLogged()}
-            {loading ? "Loading..." : null}
+            <div className='loading'>{loading ? "Loading..." : null}</div>
+
         </div>
     );
 };
