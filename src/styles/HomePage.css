@@ -1,0 +1,17 @@
+.container {
+    display: grid;
+    grid-template-columns: 80% 20%;
+}
+.login{
+    font-size: x-large;
+    /* border-style: dashed; */
+    text-align: center;
+    padding-top: 20px;
+}
+
+.Header li{
+    /* border-style: dashed; */
+    display: inline-block;
+    zoom:1.5;
+    padding-left: 120px;
+}

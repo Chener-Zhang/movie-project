@@ -1,5 +1,3 @@
-import Login from "../navigations/Login";
-
 
 export default function LogReducer(state = {type: 'LOGOUT', Boolean : false, userName : ''}, action) {
     switch (action.type) {
