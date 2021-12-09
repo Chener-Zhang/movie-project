@@ -13,8 +13,11 @@ export default function Login() {
 
     const [userName, setUserName] = useState('');
     const [passWord, setPassWord] = useState('');
+    const [loading, setLoading] = useState(false);
+
     const isLogged = useSelector(state => state.LogReducer);
     const dispatch = useDispatch()
+
 
     async function login() {
         console.warn(userName, passWord);
@@ -23,6 +26,7 @@ export default function Login() {
             .then(res => res.json())
             .then(result => {
                 // console.log(1)
+                setLoading(true);
                 const param = `username=${userName}&password=${passWord}&request_token=${result.request_token}`
                 return fetch(`https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`, { method: 'POST' })
             })
@@ -30,18 +34,22 @@ export default function Login() {
             .then(token => {
                 // console.log(2)
                 // console.log(token.request_token)
+                setLoading(true);
                 const param = `request_token=${token.request_token}`
                 return fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`, { method: 'POST' })
             })
             .then(res => res.json())
             .then(sessionID => {
+                setLoading(true);
                 console.log(sessionID);
-                if(sessionID.success){
+                if (sessionID.success) {
+                    setLoading(false);
                     console.log(sessionID.session_id)
                     dispatch(USER_LOGIN(userName, sessionID.session_id));
-                }else{
+
+                } else {
                     console.log('login fail')
-                }               
+                }
             })
         return response;
     }
@@ -67,7 +75,7 @@ export default function Login() {
                     <button onClick={checkUserInfo}>LOGIN </button>
                 </div>)
 
-        } 
+        }
         //If already login, then redirect to home page
         else {
             return (<Redirect from="/login" to="/home" />)
@@ -77,7 +85,9 @@ export default function Login() {
 
 
     return (
-        <>
+        <div>
             {userLogged()}
-        </>);
+            {loading ? "Loading..." : null}
+        </div>
+    );
 };
