@@ -70,7 +70,7 @@ export default function Login() {
         } 
         //If already login, then redirect to home page
         else {
-            return (<Redirect from="/login" to="/" />)
+            return (<Redirect from="/login" to="/home" />)
         }
     }
 
