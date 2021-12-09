@@ -30,13 +30,13 @@ export default function Login() {
             .then(res => res.json())
             .then(token => {
                 console.log(2)
-                console.log(token)
-                return fetch(`https://www.themoviedb.org/authenticate/${token.request_token}`, { method: 'POST', mode: "no-cors" })
+                console.log(token.request_token)
+                const param = `request_token=${token.request_token}`
+                return fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`, { method: 'POST' })
             })
             .then(res => res.json())
-            .catch(err => {
-                console.log('caught it!',err);
-             });
+            .then(sessionID => console.log(sessionID))
+
         return response;
     }
 
