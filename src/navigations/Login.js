@@ -8,14 +8,13 @@ import { Redirect } from 'react-router-dom'
 import '../styles/LoginPage.css'
 
 
-
 export default function Login() {
 
     const [userName, setUserName] = useState('');
     const isLogged = useSelector(state => state.LogReducer);
     const dispatch = useDispatch()
 
-    // console.log(isLogged)
+
     
     const userLogged = () => {
         if (!isLogged.Boolean) {
@@ -37,7 +36,6 @@ export default function Login() {
             return (<Redirect from="/login" to="/" />)
         }
     }
-
     return (
         <>
             {userLogged()}
