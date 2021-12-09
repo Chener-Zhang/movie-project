@@ -34,9 +34,9 @@ export default function Login() {
                 return fetch(`https://www.themoviedb.org/authenticate/${token.request_token}`, { method: 'POST', mode: "no-cors" })
             })
             .then(res => res.json())
-            .then(result => {
-                console.log(result)
-            })
+            .catch(err => {
+                console.log('caught it!',err);
+             });
         return response;
     }
 
