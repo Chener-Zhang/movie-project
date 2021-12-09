@@ -19,7 +19,7 @@ function Header() {
     return (<>
         <div className="container">
             <ul className="Header" >
-                <Link to="/"><li>HOME</li></Link>
+                <Link to="/home"><li>HOME</li></Link>
                 <Link to="/favorite"><li>Favorite</li></Link>
                 <Link to="/rated"><li>Rated</li></Link>
             </ul>
