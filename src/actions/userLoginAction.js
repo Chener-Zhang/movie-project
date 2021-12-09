@@ -1,14 +1,14 @@
-export default USER_LOGIN = () => {
+export const USER_LOGIN = () => {
     return {
-        type: 'LOGIN'
-
+        type: 'LOGIN',
+        Boolean:  true
     };
 }
 
 
-export default USER_LOGOUT = () => {
+export const USER_LOGOUT = () => {
     return {
-        type: 'LOGOUT'
-
+        type: 'LOGOUT',
+        Boolean:  false
     }
 }
