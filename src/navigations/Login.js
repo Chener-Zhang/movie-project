@@ -23,15 +23,24 @@ export default function Login() {
         const response = await fetch("https://api.themoviedb.org/3/authentication/token/new?api_key=dd32c1edcdcaa2ef3be79570c191e5ea")
             .then(res => res.json())
             .then(result => {
-                console.log(result)
-                return fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key=${result.request_token}`)
+                console.log(result.request_token)
+
+                return fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key=dd32c1edcdcaa2ef3be79570c191e5ea`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        "username": userName,
+                        "password": passWord,
+                        "request_token": result.request_token
+                    })
+                })
             })
             .then(res => res.json())
-            .then(token => console.log(token))
-
+            .then(token => { 
+                console.log('final result')
+                console.log(token) 
+            })
 
     }
-
 
     const checkUserInfo = () => {
         console.log('button click')
