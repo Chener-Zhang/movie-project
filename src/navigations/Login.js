@@ -23,23 +23,21 @@ export default function Login() {
         const response = await fetch("https://api.themoviedb.org/3/authentication/token/new?api_key=dd32c1edcdcaa2ef3be79570c191e5ea")
             .then(res => res.json())
             .then(result => {
-                console.log(result.request_token)
-
-                return fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key=dd32c1edcdcaa2ef3be79570c191e5ea`, {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        "username": userName,
-                        "password": passWord,
-                        "request_token": result.request_token
-                    })
-                })
+                console.log(1)
+                const param = `username=${userName}&password=${passWord}&request_token=${result.request_token}`
+                return fetch(`https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`, { method: 'POST' })
             })
             .then(res => res.json())
-            .then(token => { 
-                console.log('final result')
-                console.log(token) 
+            .then(token => {
+                console.log(2)
+                console.log(token)
+                return fetch(`https://www.themoviedb.org/authenticate/${token.request_token}`, { method: 'POST', mode: "no-cors" })
             })
-
+            .then(res => res.json())
+            .then(result => {
+                console.log(result)
+            })
+        return response;
     }
 
     const checkUserInfo = () => {
