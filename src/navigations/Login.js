@@ -35,15 +35,18 @@ export default function Login() {
             })
             .then(res => res.json())
             .then(sessionID => {
-                // console.log(sessionID);
-                dispatch(USER_LOGIN(userName, sessionID));
+                console.log(sessionID);
+                if(sessionID.success){
+                    console.log(sessionID.session_id)
+                    dispatch(USER_LOGIN(userName, sessionID.session_id));
+                }else{
+                    console.log('login fail')
+                }               
             })
         return response;
     }
 
     const checkUserInfo = () => {
-    
-
         if (userName == "" || passWord == "") {
             console.log('it empty')
         }
@@ -56,7 +59,7 @@ export default function Login() {
 
         if (!isLogged.Boolean) {
             return (
-                
+
                 <div className="loginStyle">
                     <h2>LOGIN</h2>
                     <input onChange={(e) => setUserName(e.target.value)} placeholder="UserName" />
