@@ -1,9 +1,9 @@
-export const USER_LOGIN = (userInput) => {
+export const USER_LOGIN = (userInput, accountId) => {
     return {
         type: 'LOGIN',
-        Boolean:  true,
+        Boolean: true,
         userName: userInput,
-        requestToken: ''
+        Id: accountId
     };
 }
 
@@ -11,8 +11,7 @@ export const USER_LOGIN = (userInput) => {
 export const USER_LOGOUT = () => {
     return {
         type: 'LOGOUT',
-        Boolean:  false,
-        userName : ''
-
+        Boolean: false,
+        userName: ''
     }
 }
