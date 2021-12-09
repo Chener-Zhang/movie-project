@@ -14,6 +14,7 @@ export default function Login() {
     const [userName, setUserName] = useState('');
     const [passWord, setPassWord] = useState('');
     const [loading, setLoading] = useState(false);
+    const [authenicationStatus, setAuthenicationStatus] = useState(false);
 
     const isLogged = useSelector(state => state.LogReducer);
     const dispatch = useDispatch()
@@ -40,11 +41,14 @@ export default function Login() {
                 setLoading(true);
                 if (sessionID.success) {
                     setLoading(false);
+                    setAuthenicationStatus(false)
                     dispatch(USER_LOGIN(userName, sessionID.session_id));
                 } else {
+                    setLoading(false);
+                    setAuthenicationStatus(true)
                 }
             })
-            
+
         return response;
     }
 
@@ -84,6 +88,7 @@ export default function Login() {
         <div>
             {userLogged()}
             <div className='loading'>{loading ? "Loading..." : null}</div>
+            {authenicationStatus && <p className='loading'>Your login credentials could not be verified, please try again.</p>}
 
         </div>
     );
