@@ -7,18 +7,17 @@ import Rated from "./navigations/Rated"
 import Login from "./navigations/Login";
 
 
-
-
 function App() {
+
   return (
 
     <Router >
       <Header />
       <Switch>
-        <Route exact path="/"  component={HOME} />
-        <Route exact path="/favorite"  component={Favorite} />
-        <Route exact path="/rated"  component={Rated} />
-        <Route exact path="/login"  component={Login} />
+        <Route exact path="/home" component={HOME} />
+        <Route exact path="/favorite" component={Favorite} />
+        <Route exact path="/rated" component={Rated} />
+        <Route exact path="/login" component={Login} />
       </Switch>
     </Router>
 

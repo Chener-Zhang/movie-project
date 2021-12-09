@@ -13,8 +13,12 @@ export default function Login() {
 
     const [userName, setUserName] = useState('');
     const [passWord, setPassWord] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [authenicationStatus, setAuthenicationStatus] = useState(false);
+
     const isLogged = useSelector(state => state.LogReducer);
     const dispatch = useDispatch()
+
 
     async function login() {
         console.warn(userName, passWord);
@@ -22,36 +26,40 @@ export default function Login() {
         const response = await fetch("https://api.themoviedb.org/3/authentication/token/new?api_key=dd32c1edcdcaa2ef3be79570c191e5ea")
             .then(res => res.json())
             .then(result => {
-                // console.log(1)
+                setLoading(true);
                 const param = `username=${userName}&password=${passWord}&request_token=${result.request_token}`
                 return fetch(`https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`, { method: 'POST' })
             })
             .then(res => res.json())
             .then(token => {
-                // console.log(2)
-                // console.log(token.request_token)
+                setLoading(true);
                 const param = `request_token=${token.request_token}`
                 return fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`, { method: 'POST' })
             })
             .then(res => res.json())
             .then(sessionID => {
-                console.log(sessionID);
-                if(sessionID.success){
-                    console.log(sessionID.session_id)
+                setLoading(true);
+                if (sessionID.success) {
+                    setLoading(false);
+                    setAuthenicationStatus(false)
                     dispatch(USER_LOGIN(userName, sessionID.session_id));
-                }else{
-                    console.log('login fail')
-                }               
+                } else {
+                    setLoading(false);
+                    setAuthenicationStatus(true)
+                }
             })
+
         return response;
     }
 
     const checkUserInfo = () => {
-        if (userName == "" || passWord == "") {
+        if (userName === "" || passWord === "") {
             console.log('it empty')
         }
         login();
     }
+
+
 
 
     const userLogged = () => {
@@ -67,17 +75,21 @@ export default function Login() {
                     <button onClick={checkUserInfo}>LOGIN </button>
                 </div>)
 
-        } 
+        }
         //If already login, then redirect to home page
         else {
-            return (<Redirect from="/login" to="/" />)
+            return (<Redirect from="/login" to="/home" />)
         }
     }
 
 
 
     return (
-        <>
+        <div>
             {userLogged()}
-        </>);
+            <div className='loading'>{loading ? "Loading..." : null}</div>
+            {authenicationStatus && <p className='loading'>Your login credentials could not be verified, please try again.</p>}
+
+        </div>
+    );
 };
