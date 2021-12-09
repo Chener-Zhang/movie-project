@@ -1,8 +1,11 @@
 
+import { useSelector } from 'react-redux'
 
 function HOME() {
-    
-    return ( <div>This is the home page</div> );
+
+    const isLogged = useSelector(state => state.LogReducer);
+    console.log(isLogged);
+    return (<div>This is the home page</div>);
 }
 
 export default HOME;

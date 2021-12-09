@@ -7,7 +7,6 @@ import '../styles/HomePage.css'
 function Header() {
 
     const isLogged = useSelector(state => state.LogReducer);
-    console.log(isLogged);
     function checkIfLog() {
         if (!isLogged.Boolean) {
             return <Link className="login" to="/login">Login</Link>
