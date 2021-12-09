@@ -23,34 +23,48 @@ export default function Login() {
         console.warn(userName, passWord);
 
         const response = await fetch("https://api.themoviedb.org/3/authentication/token/new?api_key=dd32c1edcdcaa2ef3be79570c191e5ea")
-            .then(res => res.json())
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                } else {
+                    throw new Error('Something went wrong');
+                }
+            })
             .then(result => {
-                // console.log(1)
                 setLoading(true);
                 const param = `username=${userName}&password=${passWord}&request_token=${result.request_token}`
                 return fetch(`https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`, { method: 'POST' })
             })
-            .then(res => res.json())
-            .then(token => {
-                // console.log(2)
-                // console.log(token.request_token)
-                setLoading(true);
-                const param = `request_token=${token.request_token}`
-                return fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`, { method: 'POST' })
-            })
-            .then(res => res.json())
-            .then(sessionID => {
-                setLoading(true);
-                console.log(sessionID);
-                if (sessionID.success) {
-                    setLoading(false);
-                    console.log(sessionID.session_id)
-                    dispatch(USER_LOGIN(userName, sessionID.session_id));
-
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
                 } else {
-                    console.log('login fail')
+                    throw new Error('Something went wrong');
                 }
             })
+        // .then(token => {
+        //     console.warn(2)
+        //     setLoading(true);
+        //     const param = `request_token=${token.request_token}`
+        //     return fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`, { method: 'POST' })
+        // })
+        // .then(res => {
+        //     if (res.ok) {
+        //         return res.json();
+        //     } else {
+        //         throw new Error('Something went wrong');
+        //     }
+        // })
+        // .then(sessionID => {
+        //     console.warn(3)
+        //     setLoading(true);
+        //     if (sessionID.success) {
+        //         setLoading(false);
+        //         console.log(sessionID.session_id)
+        //         dispatch(USER_LOGIN(userName, sessionID.session_id));
+        //     } else {
+        //     }
+        // })
         return response;
     }
 
