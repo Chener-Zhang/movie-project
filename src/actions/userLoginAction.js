@@ -2,7 +2,8 @@ export const USER_LOGIN = (userInput) => {
     return {
         type: 'LOGIN',
         Boolean:  true,
-        userName: userInput
+        userName: userInput,
+        requestToken: ''
     };
 }
 
