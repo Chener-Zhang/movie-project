@@ -1,7 +1,8 @@
-export const USER_LOGIN = () => {
+export const USER_LOGIN = (userInput) => {
     return {
         type: 'LOGIN',
-        Boolean:  true
+        Boolean:  true,
+        userName: userInput
     };
 }
 
@@ -9,6 +10,8 @@ export const USER_LOGIN = () => {
 export const USER_LOGOUT = () => {
     return {
         type: 'LOGOUT',
-        Boolean:  false
+        Boolean:  false,
+        userName : ''
+
     }
 }
