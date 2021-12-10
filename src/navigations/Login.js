@@ -3,11 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { USER_LOGIN } from '../actions/userLoginAction'
 import { useState } from 'react';
 import { Redirect } from 'react-router-dom'
+import axios from 'axios'
 
 //CSS
 import '../styles/LoginPage.css'
-
-
 
 export default function Login() {
 
@@ -18,37 +17,47 @@ export default function Login() {
 
     const isLogged = useSelector(state => state.LogReducer);
     const dispatch = useDispatch()
-
+    const api_key = 'dd32c1edcdcaa2ef3be79570c191e5ea';
 
     async function login() {
-        console.warn(userName, passWord);
-
-        const response = await fetch("https://api.themoviedb.org/3/authentication/token/new?api_key=dd32c1edcdcaa2ef3be79570c191e5ea")
-            .then(res => res.json())
-            .then(result => {
+        const response = await axios
+            .get(`https://api.themoviedb.org/3/authentication/token/new?api_key=${api_key}`)
+            .then(response => {
                 setLoading(true);
-                const param = `username=${userName}&password=${passWord}&request_token=${result.request_token}`
-                return fetch(`https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`, { method: 'POST' })
+                console.log(response.data)
+                const param = `username=${userName}&password=${passWord}&request_token=${response.data.request_token}`
+                return axios.post(`https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`)
             })
-            .then(res => res.json())
-            .then(token => {
+            .then(response => {
                 setLoading(true);
-                const param = `request_token=${token.request_token}`
-                return fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`, { method: 'POST' })
+                console.log(response.data)
+                const param = `request_token=${response.data.request_token}`
+                return axios.post(`https://api.themoviedb.org/3/authentication/session/new?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`)
+            }).catch(error =>{
+                setLoading(false);
+                setAuthenicationStatus(true)
             })
-            .then(res => res.json())
-            .then(sessionID => {
+            .then(response => {
                 setLoading(true);
-                if (sessionID.success) {
+                console.log(response.data)
+                const param = `session_id=${response.data.session_id}`
+                return axios.get(`https://api.themoviedb.org/3/account?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`)
+            }).catch(error =>{
+                setLoading(false);
+                setAuthenicationStatus(true)
+            })
+            .then(response => {
+                setLoading(true);
+                console.log(response.data)
+                if (response.status === 200) {
                     setLoading(false);
                     setAuthenicationStatus(false)
-                    dispatch(USER_LOGIN(userName, sessionID.session_id));
-                } else {
-                    setLoading(false);
-                    setAuthenicationStatus(true)
-                }
+                    dispatch(USER_LOGIN(userName, response.data.id))
+                } 
+            }).catch(error =>{
+                setLoading(false);
+                setAuthenicationStatus(true)
             })
-
         return response;
     }
 
