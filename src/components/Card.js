@@ -3,7 +3,8 @@ import { AiFillHeart } from 'react-icons/ai';
 
 
 
-function Card() {
+function Card(cardInformation) {
+    
     function CardInfo() {
         return (<>
             <div>
