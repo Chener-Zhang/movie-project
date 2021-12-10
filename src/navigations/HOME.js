@@ -8,6 +8,8 @@ function HOME() {
 
     const isLogged = useSelector(state => state.LogReducer);
     const changePage = useSelector(state => state.PageReducer);
+    const [pageresult, setPageresult] = useState([]);
+
     const dispatch = useDispatch();
     const api_key = 'dd32c1edcdcaa2ef3be79570c191e5ea';
 
@@ -15,6 +17,7 @@ function HOME() {
         // Update the document title using the browser API
         console.log(isLogged);
         console.log(changePage);
+
         const result = await axios.get("https://api.themoviedb.org/3/movie/now_playing?", {
             params: {
                 api_key: api_key,
@@ -23,18 +26,21 @@ function HOME() {
             }
         })
             .then(response => {
-                console.log(response.data);
+                const data = response.data.results
+                console.log(data)
+                setPageresult(data)
             })
             .catch(error => {
                 console.warn(error);
             })
-
-    });
+    },[changePage]);
 
 
     return (<div>This is the home page
         {/* <Card/> */}
         <h2>{changePage}</h2>
+
+
         <button onClick={() => {
             if (!(changePage <= 1)) {
                 dispatch(PRE_PAGE())
