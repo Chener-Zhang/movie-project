@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
 import axios from 'axios'
+import Card from '../components/Card';
 
 function HOME() {
 
@@ -15,17 +16,19 @@ function HOME() {
         const result = await axios.get("https://api.themoviedb.org/3/movie/now_playing?", {
             params: {
                 api_key: api_key
-            }})
+            }
+        })
             .then(response => {
                 console.log(response);
             })
             .catch(error => {
                 console.warn(error);
             })
-            
 
     });
-    return (<div>This is the home page</div>);
+    return (<div>This is the home page
+        {/* <Card/> */}
+    </div>);
 }
 
 export default HOME;
