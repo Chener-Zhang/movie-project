@@ -16,7 +16,7 @@ function HOME() {
     useEffect(async () => {
         // Update the document title using the browser API
         console.log(isLogged);
-        console.log(changePage);
+        console.log(`Current Page # : ${changePage}`);
 
         const result = await axios.get("https://api.themoviedb.org/3/movie/now_playing?", {
             params: {
@@ -27,18 +27,25 @@ function HOME() {
         })
             .then(response => {
                 const data = response.data.results
-                console.log(data)
                 setPageresult(data)
             })
             .catch(error => {
                 console.warn(error);
             })
-    },[changePage]);
+    }, [changePage]);
 
+    //  <h2>hihi{pageresult[0].id}</h2> 
 
     return (<div>This is the home page
         {/* <Card/> */}
         <h2>{changePage}</h2>
+
+        <div>
+            {pageresult.map(movie => {
+                console.log(movie)
+            })}
+
+        </div>
 
 
         <button onClick={() => {

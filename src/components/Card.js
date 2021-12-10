@@ -3,9 +3,10 @@ import { AiFillHeart } from 'react-icons/ai';
 
 
 
-function Card(cardInformation) {
+
+export class Card extends React.Component {
     
-    function CardInfo() {
+    render() {
         return (<>
             <div>
                 <img />
@@ -17,9 +18,8 @@ function Card(cardInformation) {
             </div>
 
         </>)
-    }
-    return (<>
-    </>);
-}
+    };
+};
 
 export default Card;
+
