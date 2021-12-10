@@ -1,0 +1,11 @@
+.myList {
+    /* border-style: dashed; */
+    display              : grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+
+}
+
+.myList li {
+    border-style: dashed;
+    text-align: center;
+}

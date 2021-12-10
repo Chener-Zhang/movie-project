@@ -4,6 +4,9 @@ import { NEXT_PAGE, PRE_PAGE } from '../actions/pageChangeAction'
 import axios from 'axios'
 import Card from '../components/Card';
 
+//CSS
+import '../styles/Home.css'
+
 function HOME() {
 
     const isLogged = useSelector(state => state.LogReducer);
@@ -39,15 +42,6 @@ function HOME() {
     return (<div>This is the home page
         {/* <Card/> */}
         <h2>{changePage}</h2>
-
-        <div>
-            {pageresult.map(movie => {
-                console.log(movie)
-            })}
-
-        </div>
-
-
         <button onClick={() => {
             if (!(changePage <= 1)) {
                 dispatch(PRE_PAGE())
@@ -60,6 +54,14 @@ function HOME() {
         <button onClick={() => dispatch(NEXT_PAGE())}>
             NEXT PAGE
         </button>
+        <ul className='myList'>
+            {pageresult.map(movie => {
+                return <li key={movie.id}>< Card movieInfo={movie} /></li>
+            })}
+        </ul>
+
+
+
 
 
     </div>);
