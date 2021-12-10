@@ -17,7 +17,9 @@ function HOME() {
         console.log(changePage);
         const result = await axios.get("https://api.themoviedb.org/3/movie/now_playing?", {
             params: {
-                api_key: api_key
+                api_key: api_key,
+                language: 'en-US',
+                page: changePage
             }
         })
             .then(response => {
@@ -33,13 +35,19 @@ function HOME() {
     return (<div>This is the home page
         {/* <Card/> */}
         <h2>{changePage}</h2>
+        <button onClick={() => {
+            if (!(changePage <= 1)) {
+                dispatch(PRE_PAGE())
+            }
 
+        }}
+        >
+            Previous Page
+        </button>
         <button onClick={() => dispatch(NEXT_PAGE())}>
             NEXT PAGE
         </button>
-        <button onClick={() => dispatch(PRE_PAGE())}>
-            Previous Page
-        </button>
+
 
     </div>);
 }

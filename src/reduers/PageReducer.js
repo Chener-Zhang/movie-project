@@ -1,4 +1,4 @@
-export default function PageReducer(state = 0, action) {
+export default function PageReducer(state = 1, action) {
 
     console.log(action)
 
