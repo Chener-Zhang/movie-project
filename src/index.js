@@ -8,9 +8,9 @@ import { Provider } from 'react-redux'
 import { combineReducers } from 'redux'
 import LogReducer from './reduers/LogReducer'
 import PageReducer from './reduers/PageReducer';
-import CateReducer from './reduers/CateReducer';
 
-const rootReducer = combineReducers({ LogReducer, PageReducer, CateReducer });
+
+const rootReducer = combineReducers({ LogReducer, PageReducer });
 const store = createStore(rootReducer);
 
 ReactDOM.render(

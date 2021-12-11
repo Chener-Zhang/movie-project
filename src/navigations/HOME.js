@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { NEXT_PAGE, PRE_PAGE } from '../actions/pageChangeAction'
-import { NOWP_PLAYING, TOP_RATED, POPULAR, UP_COMING } from '../actions/pageChangeAction'
 
 import Select from 'react-select'
 
