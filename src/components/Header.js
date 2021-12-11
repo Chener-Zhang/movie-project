@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 //CSS 
-import '../styles/HomePage.css'
+import '../styles/Header.css'
 function Header() {
 
     const isLogged = useSelector(state => state.LogReducer);
