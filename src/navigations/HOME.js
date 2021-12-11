@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { NEXT_PAGE, PRE_PAGE } from '../actions/pageChangeAction'
+import { NEXT_PAGE, PRE_PAGE, RESET } from '../actions/pageChangeAction'
 
 import Select from 'react-select'
 
@@ -32,7 +32,7 @@ function HOME() {
     useEffect(async () => {
         // Update the document title using the browser API
         // console.log(isLogged);
-        
+
         console.log(`Current Page # : ${currentPage}`);
         console.log(`Current Cate : ${cateResult}`)
         const key = currentPage + cateResult;
@@ -70,7 +70,10 @@ function HOME() {
 
             <Select
                 defaultValue={options[0]}
-                onChange={(e) => setCateresult(e.value)}
+                onChange={(e) => {
+                    setCateresult(e.value)
+                    dispatch(RESET())
+                }}
                 options={options}
             />
 

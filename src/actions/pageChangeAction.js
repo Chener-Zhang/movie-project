@@ -10,3 +10,9 @@ export const PRE_PAGE = () => {
     };
 }
 
+export const RESET = () => {
+    return {
+        type: 'RESET'
+    };
+}
+
