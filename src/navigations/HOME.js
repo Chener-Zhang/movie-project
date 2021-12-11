@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { NEXT_PAGE, PRE_PAGE } from '../actions/pageChangeAction'
+import { NOWP_PLAYING, TOP_RATED, POPULAR, UP_COMING } from '../actions/pageChangeAction'
+
+import Select from 'react-select'
+
 import axios from 'axios'
 import Card from '../components/Card';
 
@@ -11,17 +15,30 @@ function HOME() {
 
     const isLogged = useSelector(state => state.LogReducer);
     const currentPage = useSelector(state => state.PageReducer);
+
+
     const [pageresult, setPageresult] = useState([]);
+    const [cateResult, setCateresult] = useState('NowPlaying');
 
     const dispatch = useDispatch();
     const api_key = 'dd32c1edcdcaa2ef3be79570c191e5ea';
 
+    const options = [
+        { value: 'now_playing', label: 'NowPlaying' },
+        { value: 'top_rated', label: 'Top Rated' },
+        { value: 'popular', label: 'Popular' },
+        { value: 'upcoming', label: 'Upcoming' }
+    ];
+
     useEffect(async () => {
         // Update the document title using the browser API
-        console.log(isLogged);
+        // console.log(isLogged);
         console.log(`Current Page # : ${currentPage}`);
-        const currentStorage = localStorage.getItem(currentPage);
-        
+        console.log(`Current Cate : ${cateResult}`)
+        const key = currentPage + cateResult;
+        const currentStorage = localStorage.getItem(key);
+
+
         //If no previous history, save it 
         if (currentStorage == null) {
             const result = await axios.get("https://api.themoviedb.org/3/movie/now_playing?", {
@@ -33,50 +50,47 @@ function HOME() {
             })
                 .then(response => {
                     const data = response.data.results
-                    localStorage.setItem(currentPage, JSON.stringify(data));
+                    localStorage.setItem(key, JSON.stringify(data));
                     setPageresult(data)
-
                 })
                 .catch(error => {
                     console.warn(error);
                 })
-        } 
+        }
         //Retrive from histories
         else {
-            const data = JSON.parse(localStorage.getItem(currentPage));
+            const data = JSON.parse(localStorage.getItem(key));
             setPageresult(data)
         }
 
-    }, [currentPage]);
+    }, [currentPage, cateResult]);
 
-    //  <h2>hihi{pageresult[0].id}</h2> 
+    return (
+        <div>This is the home page
 
-    return (<div>This is the home page
-        {/* <Card/> */}
-        <h2>{currentPage}</h2>
-        <button onClick={() => {
-            if (!(currentPage <= 1)) {
-                dispatch(PRE_PAGE())
-            }
+            <Select
+                defaultValue={options[0]}
+                onChange={(e) => setCateresult(e.value)}
+                options={options}
+            />
 
-        }}
-        >
-            Previous Page
-        </button>
-        <button onClick={() => dispatch(NEXT_PAGE())}>
-            NEXT PAGE
-        </button>
-        <ul className='myList'>
-            {pageresult.map(movie => {
-                return <li key={movie.id}>< Card movieInfo={movie} /></li>
-            })}
-        </ul>
+            <h2>{currentPage}</h2>
 
+            <button onClick={() => { if (!(currentPage <= 1)) { dispatch(PRE_PAGE()) } }}>
+                Previous Page
+            </button>
 
+            <button onClick={() => dispatch(NEXT_PAGE())}>
+                NEXT PAGE
+            </button>
 
+            <ul className='myList'>
+                {pageresult.map(movie => {
+                    return <li key={movie.id}>< Card movieInfo={movie} /></li>
+                })}
+            </ul>
 
-
-    </div>);
+        </div>);
 }
 
 export default HOME;
