@@ -9,6 +9,8 @@ export default function PageReducer(state = 1, action) {
         case 'PRE_PAGE':
             return state - 1;
 
+        case 'RESET':
+            return 1;
         default:
 
             return state;
