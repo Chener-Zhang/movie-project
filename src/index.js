@@ -9,6 +9,7 @@ import { combineReducers } from 'redux'
 import LogReducer from './reduers/LogReducer'
 import PageReducer from './reduers/PageReducer';
 
+
 const rootReducer = combineReducers({ LogReducer, PageReducer });
 const store = createStore(rootReducer);
 
