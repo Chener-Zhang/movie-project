@@ -10,7 +10,7 @@ import '../styles/Home.css'
 function HOME() {
 
     const isLogged = useSelector(state => state.LogReducer);
-    const changePage = useSelector(state => state.PageReducer);
+    const currentPage = useSelector(state => state.PageReducer);
     const [pageresult, setPageresult] = useState([]);
 
     const dispatch = useDispatch();
@@ -19,31 +19,43 @@ function HOME() {
     useEffect(async () => {
         // Update the document title using the browser API
         console.log(isLogged);
-        console.log(`Current Page # : ${changePage}`);
+        console.log(`Current Page # : ${currentPage}`);
+        const currentStorage = localStorage.getItem(currentPage);
+        
+        //If no previous history, save it 
+        if (currentStorage == null) {
+            const result = await axios.get("https://api.themoviedb.org/3/movie/now_playing?", {
+                params: {
+                    api_key: api_key,
+                    language: 'en-US',
+                    page: currentPage
+                }
+            })
+                .then(response => {
+                    const data = response.data.results
+                    localStorage.setItem(currentPage, JSON.stringify(data));
+                    setPageresult(data)
 
-        const result = await axios.get("https://api.themoviedb.org/3/movie/now_playing?", {
-            params: {
-                api_key: api_key,
-                language: 'en-US',
-                page: changePage
-            }
-        })
-            .then(response => {
-                const data = response.data.results
-                setPageresult(data)
-            })
-            .catch(error => {
-                console.warn(error);
-            })
-    }, [changePage]);
+                })
+                .catch(error => {
+                    console.warn(error);
+                })
+        } 
+        //Retrive from histories
+        else {
+            const data = JSON.parse(localStorage.getItem(currentPage));
+            setPageresult(data)
+        }
+
+    }, [currentPage]);
 
     //  <h2>hihi{pageresult[0].id}</h2> 
 
     return (<div>This is the home page
         {/* <Card/> */}
-        <h2>{changePage}</h2>
+        <h2>{currentPage}</h2>
         <button onClick={() => {
-            if (!(changePage <= 1)) {
+            if (!(currentPage <= 1)) {
                 dispatch(PRE_PAGE())
             }
 
