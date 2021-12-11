@@ -32,6 +32,7 @@ function HOME() {
     useEffect(async () => {
         // Update the document title using the browser API
         // console.log(isLogged);
+        
         console.log(`Current Page # : ${currentPage}`);
         console.log(`Current Cate : ${cateResult}`)
         const key = currentPage + cateResult;
@@ -40,7 +41,7 @@ function HOME() {
 
         //If no previous history, save it 
         if (currentStorage == null) {
-            const result = await axios.get("https://api.themoviedb.org/3/movie/now_playing?", {
+            const result = await axios.get(`https://api.themoviedb.org/3/movie/${cateResult}?`, {
                 params: {
                     api_key: api_key,
                     language: 'en-US',
