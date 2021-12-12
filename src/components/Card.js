@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiFillHeart } from 'react-icons/ai';
+import { BsHeartFill, BsHeart } from 'react-icons/bs';
 
 
 export class Card extends React.Component {
@@ -14,7 +14,8 @@ export class Card extends React.Component {
             </div>
             <div>
                 <h3>{info.vote_average}</h3>
-                <AiFillHeart />
+                <BsHeart />
+                <BsHeartFill />
             </div>
 
         </div>)

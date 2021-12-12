@@ -29,6 +29,7 @@ function HOME() {
         { value: 'upcoming', label: 'Upcoming' }
     ];
 
+    console.log(isLogged);
     useEffect(async () => {
         // Update the document title using the browser API
         // console.log(isLogged);
