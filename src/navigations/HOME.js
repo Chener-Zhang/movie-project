@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { NEXT_PAGE, PRE_PAGE, RESET } from '../actions/pageChangeAction'
-
 import Select from 'react-select'
-
 import axios from 'axios'
 import Card from '../components/Card';
 
@@ -30,7 +28,7 @@ function HOME() {
     ];
 
     console.log(isLogged);
-    useEffect(async () => {
+    useEffect(() => {
         // Update the document title using the browser API
         // console.log(isLogged);
 
@@ -38,31 +36,33 @@ function HOME() {
         console.log(`Current Cate : ${cateResult}`)
         const key = currentPage + cateResult;
         const currentStorage = localStorage.getItem(key);
-
-
-        //If no previous history, save it 
-        if (currentStorage == null) {
-            const result = await axios.get(`https://api.themoviedb.org/3/movie/${cateResult}?`, {
-                params: {
-                    api_key: api_key,
-                    language: 'en-US',
-                    page: currentPage
-                }
-            })
-                .then(response => {
-                    const data = response.data.results
-                    localStorage.setItem(key, JSON.stringify(data));
-                    setPageresult(data)
+        fetchDate();
+        async function fetchDate() {
+            //If no previous history, save it 
+            if (currentStorage == null) {
+                await axios.get(`https://api.themoviedb.org/3/movie/${cateResult}?`, {
+                    params: {
+                        api_key: api_key,
+                        language: 'en-US',
+                        page: currentPage
+                    }
                 })
-                .catch(error => {
-                    console.warn(error);
-                })
+                    .then(response => {
+                        const data = response.data.results
+                        localStorage.setItem(key, JSON.stringify(data));
+                        setPageresult(data)
+                    })
+                    .catch(error => {
+                        console.warn(error);
+                    })
+            }
+            //Retrive from histories
+            else {
+                const data = JSON.parse(localStorage.getItem(key));
+                setPageresult(data)
+            }
         }
-        //Retrive from histories
-        else {
-            const data = JSON.parse(localStorage.getItem(key));
-            setPageresult(data)
-        }
+
 
     }, [currentPage, cateResult]);
 
