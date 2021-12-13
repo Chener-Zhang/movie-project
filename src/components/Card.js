@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BsHeartFill, BsHeart } from 'react-icons/bs';
 import { useSelector, useDispatch } from 'react-redux'
 import { ADD_FAVOR, REMOVE_FAVOR } from '../actions/postFavorAction'
+import { Link } from 'react-router-dom'
 
 
 function Card(props) {
@@ -32,7 +33,11 @@ function Card(props) {
 
             <img src={`https://image.tmdb.org/t/p/w500/${info.backdrop_path}`} width="300px" height="300px" alt={info.title} />
 
-            <h2>{info.title}</h2>
+            <Link to={{ pathname: `/home/${info.id}` }} >
+                {info.title}
+            </Link>
+
+
         </div>
         <div>
             <h3>{info.vote_average}</h3>
