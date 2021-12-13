@@ -30,10 +30,8 @@ function HOME() {
         { value: 'upcoming', label: 'Upcoming' }
     ];
 
-    console.log(isLogged);
-
     useEffect(() => {
-
+        console.log(isLogged);
         fetchData();
         async function fetchData() {
 
@@ -94,7 +92,6 @@ function HOME() {
                         }}
                         options={options} />
                 </div>
-
 
 
 

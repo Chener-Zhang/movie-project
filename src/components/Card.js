@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { BsHeartFill, BsHeart } from 'react-icons/bs';
 import { useSelector, useDispatch } from 'react-redux'
-import { ADD_FAVOR, REMOVE_FAVOR } from '../actions/postFavorAction'
+import { ADD_FAVOR } from '../actions/postFavorAction'
 import { Link } from 'react-router-dom'
 
 
 //CSS
-import Button from 'react-bootstrap/Button'
+import Nav from 'react-bootstrap/Nav'
 
 function Card(props) {
 
@@ -30,46 +30,22 @@ function Card(props) {
         }
     }
 
-
     return (
         <div className='card' style={
             {
                 width: "90%",
-
             }
         }>
             <div className="card-body">
                 <img src={`https://image.tmdb.org/t/p/w500/${info.backdrop_path}`} className="card-img-top" alt={info.title} />
                 <h5 className="card-title">{info.title}</h5>
             </div>
-            <div className="card-body">
-                <Button style ={{
-                    marginRight: "100px"
-                }}variant="outline-primary">Detail</Button>
-                {checkFavor(info.id)}
-
+            <div className="row">
+                <div className='col-6'><Nav.Link as={Link} to={`/home/${info.id}`}>Detail</Nav.Link></div>
+                <div className='col-6'>{checkFavor(info.id)}</div>
             </div>
         </div>
     )
 
 };
-
 export default Card;
-
-{/* <div>
-
-<img src={`https://image.tmdb.org/t/p/w500/${info.backdrop_path}`} width="300px" height="300px" alt={info.title} />
-
-<Link to={{ pathname: `/home/${info.id}` }} >
-    {info.title}
-</Link>
-
-
-</div>
-<div>
-<h3>{info.vote_average}</h3>
-{checkFavor(info.id)}
-</div>
-<button onClick={() => {
-dispatch(REMOVE_FAVOR(info.id))
-}}>Delete</button> */}
