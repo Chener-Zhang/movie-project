@@ -1,12 +1,29 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-
+import Select from 'react-select'
+import { RATE } from '../actions/rateAction';
+import { useDispatch } from 'react-redux'
 
 function Detail(props) {
 
     const [data, setData] = useState(null);
+    const [rate, setRate] = useState(null);
     const movieId = props.match.params.id;
+    const api_key = 'dd32c1edcdcaa2ef3be79570c191e5ea';
+    const dispatch = useDispatch();
 
+    const options = [
+        { value: '1', label: '1' },
+        { value: '2', label: '2' },
+        { value: '3', label: '3' },
+        { value: '4', label: '4' },
+        { value: '5', label: '5' },
+        { value: '6', label: '6' },
+        { value: '7', label: '7' },
+        { value: '8', label: '8' },
+        { value: '9', label: '9' },
+        { value: '10', label: '10' }
+    ];
     useEffect(() => {
         axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&language=en-US`)
             .then(res => {
@@ -15,6 +32,12 @@ function Detail(props) {
             .catch(e => console.log(e))
     }, []);
 
+    function onClickHandler() {
+        console.log(rate)
+        if (rate !== null) {
+            dispatch(RATE(data.id, rate));
+        }
+    }
     function showDetail() {
         return (<>
             <img src={`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`} width="400px" height="707px" alt={data.id} />
@@ -28,7 +51,6 @@ function Detail(props) {
             <h4>Genres:
                 <ul>
                     {data.genres.map(e => {
-                        console.log(e)
                         return <li key={e.id}>{e.name}</li>
                     })}
                 </ul>
@@ -37,6 +59,19 @@ function Detail(props) {
                 <h3>{data.vote_average}</h3>
             </h4>
             {/* your rate here */}
+
+            <h4>Your Rating</h4>
+            <Select
+                defaultValue={options[0]}
+                onChange={(e) => {
+                    setRate(e.value)
+                }}
+                options={options}
+            />
+            <button onClick={() => {
+                onClickHandler()
+            }}>Submit</button>
+
             <h4>Production Companies:
                 <ul>
                     {data.production_companies.map(e => {
@@ -51,7 +86,7 @@ function Detail(props) {
     }
     return (
         <div>
-            {console.log(data)}
+
             {data ? showDetail() : null}
 
         </div>
