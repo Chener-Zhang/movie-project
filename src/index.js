@@ -3,15 +3,15 @@ import ReactDOM from 'react-dom';
 import App from './App';
 
 //Redux import 
-import { createStore } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import { combineReducers } from 'redux'
 import LogReducer from './reduers/LogReducer'
 import PageReducer from './reduers/PageReducer';
+import thunk from 'redux-thunk';
 
-
+const middlewares = applyMiddleware(thunk);
 const rootReducer = combineReducers({ LogReducer, PageReducer });
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, middlewares);
 
 ReactDOM.render(
   <Provider store={store}>
