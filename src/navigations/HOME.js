@@ -15,7 +15,8 @@ function HOME() {
 
 
     const [pageresult, setPageresult] = useState([]);
-    const [cateResult, setCateresult] = useState('NowPlaying');
+    const [cateResult, setCateresult] = useState('now_playing');
+    const [dataLoad, setDataLoad] = useState(false);
 
     const dispatch = useDispatch();
     const api_key = 'dd32c1edcdcaa2ef3be79570c191e5ea';
@@ -34,10 +35,14 @@ function HOME() {
 
         console.log(`Current Page # : ${currentPage}`);
         console.log(`Current Cate : ${cateResult}`)
-        const key = currentPage + cateResult;
-        const currentStorage = localStorage.getItem(key);
+
         fetchData();
         async function fetchData() {
+
+            const key = currentPage + cateResult;
+            const currentStorage = localStorage.getItem(key);
+
+
             //If no previous history, save it 
             if (currentStorage == null) {
                 await axios.get(`https://api.themoviedb.org/3/movie/${cateResult}?`, {
@@ -48,9 +53,11 @@ function HOME() {
                     }
                 })
                     .then(response => {
-                        const data = response.data.results
+                        const data = response.data.results;
                         localStorage.setItem(key, JSON.stringify(data));
-                        setPageresult(data)
+                        setPageresult(data);
+                        setDataLoad(true);
+
                     })
                     .catch(error => {
                         console.warn(error);
@@ -59,7 +66,8 @@ function HOME() {
             //Retrive from histories
             else {
                 const data = JSON.parse(localStorage.getItem(key));
-                setPageresult(data)
+                setPageresult(data);
+                setDataLoad(true);
             }
         }
 
@@ -88,11 +96,11 @@ function HOME() {
                 NEXT PAGE
             </button>
 
-            <ul className='myList'>
+            {dataLoad ? <ul className='myList'>
                 {pageresult.map(movie => {
                     return <li key={movie.id}>< Card movieInfo={movie} /></li>
                 })}
-            </ul>
+            </ul> : null}
 
         </div>);
 }
