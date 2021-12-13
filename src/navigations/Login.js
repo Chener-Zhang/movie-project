@@ -18,6 +18,7 @@ export default function Login() {
     const isLogged = useSelector(state => state.LogReducer);
     const dispatch = useDispatch()
     const api_key = 'dd32c1edcdcaa2ef3be79570c191e5ea';
+    let userSessionId = '';
 
     async function login() {
         const response = await axios
@@ -33,16 +34,17 @@ export default function Login() {
                 console.log(response.data)
                 const param = `request_token=${response.data.request_token}`
                 return axios.post(`https://api.themoviedb.org/3/authentication/session/new?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`)
-            }).catch(error =>{
+            }).catch(error => {
                 setLoading(false);
                 setAuthenicationStatus(true)
             })
             .then(response => {
                 setLoading(true);
-                console.log(response.data)
                 const param = `session_id=${response.data.session_id}`
+                userSessionId = response.data.session_id;
+
                 return axios.get(`https://api.themoviedb.org/3/account?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`)
-            }).catch(error =>{
+            }).catch(error => {
                 setLoading(false);
                 setAuthenicationStatus(true)
             })
@@ -52,9 +54,9 @@ export default function Login() {
                 if (response.status === 200) {
                     setLoading(false);
                     setAuthenicationStatus(false)
-                    dispatch(USER_LOGIN(userName, response.data.id))
-                } 
-            }).catch(error =>{
+                    dispatch(USER_LOGIN(userName, response.data.id, userSessionId))
+                }
+            }).catch(error => {
                 setLoading(false);
                 setAuthenicationStatus(true)
             })

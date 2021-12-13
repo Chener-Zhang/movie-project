@@ -1,10 +1,11 @@
-export const USER_LOGIN = (userName, userID) => {
+export const USER_LOGIN = (userName, userID, sessionId) => {
 
     return {
         type: 'LOGIN',
         Boolean: true,
         userName: userName,
-        userID: userID
+        userID: userID,
+        sessionId: sessionId
     };
 }
 
