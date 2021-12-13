@@ -36,8 +36,8 @@ function HOME() {
         console.log(`Current Cate : ${cateResult}`)
         const key = currentPage + cateResult;
         const currentStorage = localStorage.getItem(key);
-        fetchDate();
-        async function fetchDate() {
+        fetchData();
+        async function fetchData() {
             //If no previous history, save it 
             if (currentStorage == null) {
                 await axios.get(`https://api.themoviedb.org/3/movie/${cateResult}?`, {
