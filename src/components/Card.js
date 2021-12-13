@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BsHeartFill, BsHeart } from 'react-icons/bs';
 import { useSelector, useDispatch } from 'react-redux'
-import { ADD_FAVOR } from '../actions/postFavorAction'
+import { ADD_FAVOR, REMOVE_FAVOR } from '../actions/postFavorAction'
 
 
 function Card(props) {
@@ -38,7 +38,9 @@ function Card(props) {
             <h3>{info.vote_average}</h3>
             {checkFavor(info.id)}
         </div>
-
+        <button onClick={() => {
+            dispatch(REMOVE_FAVOR(info.id))
+        }}>Delete</button>
     </div>)
 
 };

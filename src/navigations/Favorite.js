@@ -7,7 +7,7 @@ function Favorite() {
     const [favoredData, setfavoredData] = useState(null)
     const isLogged = useSelector(state => state.LogReducer);
     const [dataLoad, setDataLoad] = useState(false);
-
+ 
     useEffect(() => {
         fetchData();
         async function fetchData() {
