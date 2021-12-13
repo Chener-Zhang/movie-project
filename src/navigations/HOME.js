@@ -1,26 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { NEXT_PAGE, PRE_PAGE, RESET } from '../actions/pageChangeAction'
+
 import Select from 'react-select'
 import axios from 'axios'
 import Card from '../components/Card';
 
+
 //CSS
 import '../styles/Home.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function HOME() {
 
     const isLogged = useSelector(state => state.LogReducer);
     const currentPage = useSelector(state => state.PageReducer);
-
+    const dispatch = useDispatch();
 
     const [pageresult, setPageresult] = useState([]);
     const [cateResult, setCateresult] = useState('now_playing');
     const [dataLoad, setDataLoad] = useState(false);
 
-    const dispatch = useDispatch();
     const api_key = 'dd32c1edcdcaa2ef3be79570c191e5ea';
-
     const options = [
         { value: 'now_playing', label: 'NowPlaying' },
         { value: 'top_rated', label: 'Top Rated' },
@@ -29,12 +31,8 @@ function HOME() {
     ];
 
     console.log(isLogged);
-    useEffect(() => {
-        // Update the document title using the browser API
-        // console.log(isLogged);
 
-        console.log(`Current Page # : ${currentPage}`);
-        console.log(`Current Cate : ${cateResult}`)
+    useEffect(() => {
 
         fetchData();
         async function fetchData() {
@@ -75,7 +73,7 @@ function HOME() {
     }, [currentPage, cateResult]);
 
     return (
-        <div>This is the home page
+        <div>
 
             <Select
                 defaultValue={options[0]}
@@ -102,7 +100,8 @@ function HOME() {
                 })}
             </ul> : null}
 
-        </div>);
+        </div>
+        );
 }
 
 export default HOME;

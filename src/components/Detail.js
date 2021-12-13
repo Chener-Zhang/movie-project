@@ -2,17 +2,14 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select'
 import { RATE } from '../actions/rateAction';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 function Detail(props) {
 
     const [data, setData] = useState(null);
     const [rate, setRate] = useState(null);
-    const [rateHistory, setRatehistory] = useState(null);
-    const isLogged = useSelector(state => state.LogReducer);
 
     const movieId = props.match.params.id;
-    const api_key = 'dd32c1edcdcaa2ef3be79570c191e5ea';
     const dispatch = useDispatch();
 
     const options = [
@@ -34,7 +31,7 @@ function Detail(props) {
             })
             .catch(e => console.log(e))
 
-    }, [rateHistory]);
+    }, []);
 
  
     function onClickHandler() {
@@ -70,8 +67,6 @@ function Detail(props) {
                 {data.vote_average}
             </h4>
 
-            <h4>Number : {rateHistory}</h4>
-
             <Select
                 defaultValue={options[0]}
                 onChange={(e) => {
@@ -87,8 +82,7 @@ function Detail(props) {
             <h4>Production Companies:
                 <ul>
                     {data.production_companies.map(e => {
-                        return
-                        (<li key={e.id}>
+                        return (<li key={e.id}>
                             {e.name}
                             <img src={`https://image.tmdb.org/t/p/w500/${e.logo_path}`} width="50px" height="30" alt={e.id} />
                         </li>)

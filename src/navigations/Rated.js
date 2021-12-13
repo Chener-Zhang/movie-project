@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import Select from 'react-select'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Card from '../components/Card';
 
 
@@ -11,17 +10,19 @@ function Rated() {
     const api_key = 'dd32c1edcdcaa2ef3be79570c191e5ea';
 
     useEffect(() => {
-        axios.get(`https://api.themoviedb.org/3/account/${isLogged.userID}/rated/movies?`, {
-            params: {
-                api_key: api_key,
-                language: 'en-US',
-                session_id: isLogged.sessionId
-            }
-        })
-            .then(res => {
-                console.log("we got the rating is ")
-                setData(res.data.results)
+        if (isLogged.Boolean) {
+            axios.get(`https://api.themoviedb.org/3/account/${isLogged.userID}/rated/movies?`, {
+                params: {
+                    api_key: api_key,
+                    language: 'en-US',
+                    session_id: isLogged.sessionId
+                }
             })
+                .then(res => {
+                    console.log("we got the rating is ")
+                    setData(res.data.results)
+                })
+        }
     }, [])
     return (
         <div>
