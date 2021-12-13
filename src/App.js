@@ -5,6 +5,7 @@ import Favorite from "./navigations/Favorite"
 import HOME from "./navigations/HOME"
 import Rated from "./navigations/Rated"
 import Login from "./navigations/Login";
+import Detail from "./components/Detail";
 
 
 function App() {
@@ -14,10 +15,11 @@ function App() {
     <Router >
       <Header />
       <Switch>
-        <Route exact path="/home" component={HOME} />
-        <Route exact path="/favorite" component={Favorite} />
-        <Route exact path="/rated" component={Rated} />
-        <Route exact path="/login" component={Login} />
+        <Route path="/home" exact component={HOME} />
+        <Route path="/favorite" exact component={Favorite} />
+        <Route path="/rated" exact component={Rated} />
+        <Route path="/login" exact component={Login} />
+        <Route path="/home/:id" exact component={Detail} />
       </Switch>
     </Router>
 

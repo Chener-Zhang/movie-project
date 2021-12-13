@@ -9,23 +9,25 @@ function Favorite() {
     const [dataLoad, setDataLoad] = useState(false);
 
     useEffect(() => {
-        fetchData();
-        async function fetchData() {
-            await axios.get('https://api.themoviedb.org/3/account/11480624/favorite/movies?', {
-                params: {
-                    api_key: 'dd32c1edcdcaa2ef3be79570c191e5ea',
-                    sort_by: 'created_at.asc',
-                    session_id: isLogged.sessionId
-                }
-            })
-                .then(response => {
-                    setfavoredData(response.data.results)
-                    // console.log(favoredData)
-                    setDataLoad(true);
+        if (isLogged.Boolean) {
+            fetchData();
+            async function fetchData() {
+                await axios.get('https://api.themoviedb.org/3/account/11480624/favorite/movies?', {
+                    params: {
+                        api_key: 'dd32c1edcdcaa2ef3be79570c191e5ea',
+                        sort_by: 'created_at.asc',
+                        session_id: isLogged.sessionId
+                    }
                 })
-                .catch(error => {
-                    console.warn(error);
-                })
+                    .then(response => {
+                        setfavoredData(response.data.results)
+                        // console.log(favoredData)
+                        setDataLoad(true);
+                    })
+                    .catch(error => {
+                        console.warn(error);
+                    })
+            }
         }
     }, [])
 
