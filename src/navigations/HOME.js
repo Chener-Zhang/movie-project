@@ -10,7 +10,7 @@ import Card from '../components/Card';
 //CSS
 import '../styles/Home.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import Button from 'react-bootstrap/Button'
 
 function HOME() {
 
@@ -74,25 +74,45 @@ function HOME() {
 
     return (
         <div>
+            <div className='row' style={
+                {
+                    paddingTop: '20px',
+                    paddingBottom: '20px',
+                    paddingLeft: '10px'
+                }
+            }>
+                <div style={
+                    {
+                        alignContent: 'center'
+                    }
+                } className='col-3'>
+                    <Select
+                        defaultValue={options[0]}
+                        onChange={(e) => {
+                            setCateresult(e.value)
+                            dispatch(RESET())
+                        }}
+                        options={options} />
+                </div>
 
-            <Select
-                defaultValue={options[0]}
-                onChange={(e) => {
-                    setCateresult(e.value)
-                    dispatch(RESET())
-                }}
-                options={options}
-            />
 
-            <h2>{currentPage}</h2>
 
-            <button onClick={() => { if (!(currentPage <= 1)) { dispatch(PRE_PAGE()) } }}>
-                Previous Page
-            </button>
 
-            <button onClick={() => dispatch(NEXT_PAGE())}>
-                NEXT PAGE
-            </button>
+                <div className='col-3' style={{
+                    textAlign: 'right'
+                }}>
+                    <Button variant="outline-primary" onClick={() => { if (!(currentPage <= 1)) { dispatch(PRE_PAGE()) } }}> Previous Page </Button >
+                </div>
+
+                <div className='col-3' style={{
+                    textAlign: 'center'
+                }}><h2>{currentPage}</h2></div>
+
+                <div className='col-3' >
+                    <Button variant="outline-primary" onClick={() => dispatch(NEXT_PAGE())}>NEXT PAGE</Button>
+                </div>
+
+            </div>
 
             {dataLoad ? <ul className='myList'>
                 {pageresult.map(movie => {
@@ -101,7 +121,7 @@ function HOME() {
             </ul> : null}
 
         </div>
-        );
+    );
 }
 
 export default HOME;

@@ -5,6 +5,9 @@ import { ADD_FAVOR, REMOVE_FAVOR } from '../actions/postFavorAction'
 import { Link } from 'react-router-dom'
 
 
+//CSS
+import Button from 'react-bootstrap/Button'
+
 function Card(props) {
 
     const info = props.movieInfo;
@@ -28,26 +31,45 @@ function Card(props) {
     }
 
 
-    return (<div>
-        <div>
+    return (
+        <div className='card' style={
+            {
+                width: "90%",
 
-            <img src={`https://image.tmdb.org/t/p/w500/${info.backdrop_path}`} width="300px" height="300px" alt={info.title} />
+            }
+        }>
+            <div className="card-body">
+                <img src={`https://image.tmdb.org/t/p/w500/${info.backdrop_path}`} className="card-img-top" alt={info.title} />
+                <h5 className="card-title">{info.title}</h5>
+            </div>
+            <div className="card-body">
+                <Button style ={{
+                    marginRight: "100px"
+                }}variant="outline-primary">Detail</Button>
+                {checkFavor(info.id)}
 
-            <Link to={{ pathname: `/home/${info.id}` }} >
-                {info.title}
-            </Link>
-
-
+            </div>
         </div>
-        <div>
-            <h3>{info.vote_average}</h3>
-            {checkFavor(info.id)}
-        </div>
-        <button onClick={() => {
-            dispatch(REMOVE_FAVOR(info.id))
-        }}>Delete</button>
-    </div>)
+    )
 
 };
 
 export default Card;
+
+{/* <div>
+
+<img src={`https://image.tmdb.org/t/p/w500/${info.backdrop_path}`} width="300px" height="300px" alt={info.title} />
+
+<Link to={{ pathname: `/home/${info.id}` }} >
+    {info.title}
+</Link>
+
+
+</div>
+<div>
+<h3>{info.vote_average}</h3>
+{checkFavor(info.id)}
+</div>
+<button onClick={() => {
+dispatch(REMOVE_FAVOR(info.id))
+}}>Delete</button> */}
