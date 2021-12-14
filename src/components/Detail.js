@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { RATE } from '../actions/rateAction';
 import { useDispatch } from 'react-redux'
 import Select from 'react-select'
+
 //CSS
 import '../styles/detail.css'
 import Button from 'react-bootstrap/Button'
