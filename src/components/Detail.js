@@ -39,7 +39,7 @@ function Detail(props) {
 
 
     function onClickHandler() {
-        console.log(rate)
+      
         if (rate !== null) {
             dispatch(RATE(data.id, rate));
         }

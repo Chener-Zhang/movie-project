@@ -23,7 +23,6 @@ function Favorite() {
                 })
                     .then(response => {
                         setfavoredData(response.data.results)
-                        // console.log(favoredData)
                         setDataLoad(true);
                     })
                     .catch(error => {

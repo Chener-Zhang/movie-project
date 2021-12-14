@@ -31,7 +31,7 @@ function HOME() {
     ];
 
     useEffect(() => {
-        console.log(isLogged);
+        
         fetchData();
         async function fetchData() {
 

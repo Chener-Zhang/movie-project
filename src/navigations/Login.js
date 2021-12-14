@@ -26,13 +26,13 @@ export default function Login() {
             .get(`https://api.themoviedb.org/3/authentication/token/new?api_key=${api_key}`)
             .then(response => {
                 setLoading(true);
-                console.log(response.data)
+
                 const param = `username=${userName}&password=${passWord}&request_token=${response.data.request_token}`
                 return axios.post(`https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`)
             })
             .then(response => {
                 setLoading(true);
-                console.log(response.data)
+
                 const param = `request_token=${response.data.request_token}`
                 return axios.post(`https://api.themoviedb.org/3/authentication/session/new?api_key=dd32c1edcdcaa2ef3be79570c191e5ea&${param}`)
             }).catch(error => {
@@ -51,7 +51,7 @@ export default function Login() {
             })
             .then(response => {
                 setLoading(true);
-                console.log(response.data)
+
                 if (response.status === 200) {
                     setLoading(false);
                     setAuthenicationStatus(false)

@@ -14,7 +14,7 @@ export const ADD_FAVOR = (MEDIA_ID) => {
                 favorite: true,
             }
         }).then(response => {
-            console.log(response)
+            
         })
             .catch(error => {
                 console.warn(error);
@@ -37,7 +37,7 @@ export const REMOVE_FAVOR = (MEDIA_ID) => {
                 favorite: false,
             }
         }).then(response => {
-            console.log(response)
+            
         })
             .catch(error => {
                 console.warn(error);
