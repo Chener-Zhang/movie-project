@@ -106,7 +106,7 @@ function HOME() {
                 }}><h2>{currentPage}</h2></div>
 
                 <div className='col-3' >
-                    <Button variant="outline-primary" onClick={() => dispatch(NEXT_PAGE())}>NEXT PAGE</Button>
+                    <Button variant="outline-primary" onClick={() => dispatch(NEXT_PAGE())} >NEXT PAGE</Button>
                 </div>
 
             </div>

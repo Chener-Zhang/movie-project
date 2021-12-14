@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import Select from 'react-select'
 //CSS
 import '../styles/detail.css'
+import Button from 'react-bootstrap/Button'
 
 function Detail(props) {
 
@@ -46,20 +47,25 @@ function Detail(props) {
     function showDetail() {
         return (<>
             <div className="wrapper">
-                <div className="detailImg"><img src={`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`} alt={data.id} /></div>
-                <div className="detailTitle">
-                    <h2>{data.original_title}</h2>
-                    <h4>Release data :
-                        {data.release_date}
-                    </h4>
-                </div>
-                <div className='detailOverview'>
-                    <h4>Overview:<br />
-                        {data.overview}
-                    </h4>
+
+                <div className='box1'>
+                    <img src={`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`} alt={data.id} />
                 </div>
 
-                <div className='detailMap'>
+
+                <div className='box2'>
+                    <div >
+                        <h2>{data.original_title}</h2><h4>Release data :{data.release_date}</h4>
+                    </div>
+
+                    <div >
+                        <h4>Overview:<br />{data.overview}</h4>
+                    </div>
+                </div>
+
+
+
+                <div className='box3'>
                     <h4>Genres:
                         <ul>
                             {data.genres.map(e => {
@@ -79,43 +85,34 @@ function Detail(props) {
                         </ul>
                     </h4>
                 </div>
-                <div className='detailRating'>
-                    <h4>Average Rating:
-                    {data.vote_average}
-                </h4>
-                    <Select
-                        defaultValue={options[0]}
-                        onChange={(e) => {
-                            setRate(e.value)
-                        }}
-                        options={options}
-                    />
-                    <button onClick={() => {
-                        onClickHandler()
-                    }}>Submit</button>
+
+                <div className='box4'>
+                    <div>
+                        <h4 style={{
+                            marginBottom: '2em'
+                        }} >Average Rating:
+                            {data.vote_average}
+                        </h4>
+
+                        <Select
+                            defaultValue={options[0]}
+                            onChange={(e) => {
+                                setRate(e.value)
+                            }}
+                            options={options}
+
+                        />
+
+                        <Button variant="outline-primary" onClick={() => {
+                            onClickHandler()
+                        }} style={{
+                            marginTop: '2em'
+                        }}>Submit</Button>
+                    </div>
+
                 </div>
 
-
-
             </div>
-
-            {/* 
-
-
-            <button onClick={() => {
-                onClickHandler()
-            }}>Submit</button>
-
-            <h4>Production Companies:
-                <ul>
-                    {data.production_companies.map(e => {
-                        return (<li key={e.id}>
-                            {e.name}
-                            <img src={`https://image.tmdb.org/t/p/w500/${e.logo_path}`} width="50px" height="30" alt={e.id} />
-                        </li>)
-                    })}
-                </ul>
-            </h4> */}
         </>
         );
     }
