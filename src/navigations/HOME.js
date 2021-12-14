@@ -68,7 +68,7 @@ function HOME() {
         }
 
 
-    }, [currentPage, cateResult]);
+    }, [currentPage, cateResult, isLogged]);
 
     return (
         <div>

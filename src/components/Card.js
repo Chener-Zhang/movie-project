@@ -31,11 +31,13 @@ function Card(props) {
     }
 
     return (
+
         <div className='card' style={
             {
                 width: "90%",
             }
         }>
+
             <div className="card-body">
                 <img src={`https://image.tmdb.org/t/p/w500/${info.backdrop_path}`} className="card-img-top" alt={info.title} />
                 <h5 className="card-title">{info.title}</h5>

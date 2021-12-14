@@ -29,7 +29,7 @@ function Favorite() {
                     })
             }
         }
-    }, [])
+    }, [isLogged.Boolean,isLogged.sessionId])
 
 
     return (

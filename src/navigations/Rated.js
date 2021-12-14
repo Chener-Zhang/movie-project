@@ -19,21 +19,26 @@ function Rated() {
                 }
             })
                 .then(res => {
-                    console.log("we got the rating is ")
                     setData(res.data.results)
                 })
         }
-    }, [])
+    }, [isLogged.Boolean, isLogged.sessionId, isLogged.userID])
     return (
         <div>
-            {data ? <ul>
+            {data ? <ul style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr 1fr 1fr',
+                rowGap: '2em'
+
+            }}>
                 {data.map(e => {
-                    return <li key={e.id}>< Card movieInfo={e} /></li>
+                    return <li style={{ listStyleType: "none" }} key={e.id}>< Card movieInfo={e} /></li>
                 })}
-            </ul> : null}
+            </ul> : null
+            }
 
 
-        </div>
+        </div >
     );
 }
 

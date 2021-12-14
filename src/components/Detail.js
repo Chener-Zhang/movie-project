@@ -34,7 +34,7 @@ function Detail(props) {
             })
             .catch(e => console.log(e))
 
-    }, []);
+    }, [movieId]);
 
 
     function onClickHandler() {

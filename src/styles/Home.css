@@ -2,8 +2,6 @@
     display              : grid;
     grid-template-columns: 25% 25% 25% 25%;
     row-gap: 2em;
-
-
 }
 
 .myList li {
