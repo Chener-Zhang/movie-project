@@ -7,6 +7,7 @@ import axios from 'axios'
 
 //CSS
 import '../styles/LoginPage.css'
+import Button from 'react-bootstrap/Button'
 
 export default function Login() {
 
@@ -83,11 +84,11 @@ export default function Login() {
                     <h2>LOGIN</h2>
                     <input onChange={(e) => setUserName(e.target.value)} placeholder="UserName" />
                     <input type="password" onChange={(e) => setPassWord(e.target.value)} placeholder="Passwords" />
-                    <button onClick={checkUserInfo}>LOGIN </button>
+                    <Button variant="outline-primary" onClick={checkUserInfo}>LOGIN </Button>
                 </div>)
 
         }
-        //If already login, then redirect to home page
+
         else {
             return (<Redirect from="/login" to="/home" />)
         }

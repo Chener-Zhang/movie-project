@@ -1,11 +1,11 @@
 .myList {
-    /* border-style: dashed; */
     display              : grid;
     grid-template-columns: 25% 25% 25% 25%;
-
+    row-gap: 2em;
 }
 
 .myList li {
-    border-style: dashed;
-    text-align: center;
+    list-style-type: none;
+    /* border-style   : dashed; */
+    align-items    : center;
 }

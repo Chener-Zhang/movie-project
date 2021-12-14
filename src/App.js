@@ -15,6 +15,7 @@ function App() {
     <Router >
       <Header />
       <Switch>
+        <Route path= "/" exact component={HOME} />
         <Route path="/home" exact component={HOME} />
         <Route path="/favorite" exact component={Favorite} />
         <Route path="/rated" exact component={Rated} />

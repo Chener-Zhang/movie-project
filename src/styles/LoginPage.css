@@ -3,6 +3,10 @@
     text-align: center;
 }
 
+.loginStyle input{
+    margin-right: 2em;
+}
+
 .loading{
     /* border-style: dashed; */
     text-align: center;

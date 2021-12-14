@@ -3,10 +3,8 @@ import axios from 'axios'
 export const ADD_FAVOR = (MEDIA_ID) => {
     return async (dispatch, getState) => {
 
-        console.log(MEDIA_ID)
         const sessionID = getState().LogReducer.sessionId;
 
-        //Change the account ID later Debug require
         await axios.post("https://api.themoviedb.org/3/account/11480624/favorite?", null, {
             params: {
                 api_key: 'dd32c1edcdcaa2ef3be79570c191e5ea',
@@ -27,7 +25,7 @@ export const ADD_FAVOR = (MEDIA_ID) => {
 
 export const REMOVE_FAVOR = (MEDIA_ID) => {
     return async (dispatch, getState) => {
-        //Change the account ID later Debug require
+        
         const sessionID = getState().LogReducer.sessionId;
 
         await axios.post("https://api.themoviedb.org/3/account/11480624/favorite?", null, {

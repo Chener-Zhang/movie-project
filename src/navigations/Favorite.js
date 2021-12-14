@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import axios from 'axios'
 import Card from "../components/Card";
 function Favorite() {
@@ -10,7 +10,9 @@ function Favorite() {
 
     useEffect(() => {
         if (isLogged.Boolean) {
+
             fetchData();
+
             async function fetchData() {
                 await axios.get('https://api.themoviedb.org/3/account/11480624/favorite/movies?', {
                     params: {
@@ -29,8 +31,7 @@ function Favorite() {
                     })
             }
         }
-    }, [])
-
+    }, [isLogged.Boolean,isLogged.sessionId])
 
     return (
         <div>

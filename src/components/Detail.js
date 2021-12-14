@@ -1,18 +1,19 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import Select from 'react-select'
 import { RATE } from '../actions/rateAction';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import Select from 'react-select'
+
+//CSS
+import '../styles/detail.css'
+import Button from 'react-bootstrap/Button'
 
 function Detail(props) {
 
     const [data, setData] = useState(null);
     const [rate, setRate] = useState(null);
-    const [rateHistory, setRatehistory] = useState(null);
-    const isLogged = useSelector(state => state.LogReducer);
 
     const movieId = props.match.params.id;
-    const api_key = 'dd32c1edcdcaa2ef3be79570c191e5ea';
     const dispatch = useDispatch();
 
     const options = [
@@ -34,9 +35,9 @@ function Detail(props) {
             })
             .catch(e => console.log(e))
 
-    }, [rateHistory]);
+    }, [movieId]);
 
- 
+
     function onClickHandler() {
         console.log(rate)
         if (rate !== null) {
@@ -46,58 +47,77 @@ function Detail(props) {
 
     function showDetail() {
         return (<>
-            <img src={`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`} width="400px" height="707px" alt={data.id} />
+            <div className="wrapper">
 
-            <h1>{data.original_title}</h1>
+                <div className='box1'>
+                    <img src={`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`} alt={data.id} />
+                </div>
 
-            <h4>Release data :
-                {data.release_date}
-            </h4>
 
-            <h4>Overview:
-                {data.overview}
-            </h4>
+                <div className='box2'>
+                    <div >
+                        <h2>{data.original_title}</h2><h4>Release data :{data.release_date}</h4>
+                    </div>
 
-            <h4>Genres:
-                <ul>
-                    {data.genres.map(e => {
-                        return <li key={e.id}>{e.name}</li>
-                    })}
-                </ul>
-            </h4>
+                    <div >
+                        <h4>Overview:<br />{data.overview}</h4>
+                    </div>
+                </div>
 
-            <h4>Average Rating:
-                {data.vote_average}
-            </h4>
 
-            <h4>Number : {rateHistory}</h4>
 
-            <Select
-                defaultValue={options[0]}
-                onChange={(e) => {
-                    setRate(e.value)
-                }}
-                options={options}
-            />
+                <div className='box3'>
+                    <h4>Genres:
+                        <ul>
+                            {data.genres.map(e => {
+                                return <li key={e.id}>{e.name}</li>
+                            })}
+                        </ul>
+                    </h4>
+                    <br />
+                    <h4>Production Companies:
+                        <ul>
+                            {data.production_companies.map(e => {
+                                return (<li key={e.id}>
+                                    {e.name}
+                                    <img src={`https://image.tmdb.org/t/p/w500/${e.logo_path}`} width="50px" height="30" alt={e.id} />
+                                </li>)
+                            })}
+                        </ul>
+                    </h4>
+                </div>
 
-            <button onClick={() => {
-                onClickHandler()
-            }}>Submit</button>
+                <div className='box4'>
+                    <div>
+                        <h4 style={{
+                            marginBottom: '2em'
+                        }} >Average Rating:
+                            {data.vote_average}
+                        </h4>
 
-            <h4>Production Companies:
-                <ul>
-                    {data.production_companies.map(e => {
-                        return
-                        (<li key={e.id}>
-                            {e.name}
-                            <img src={`https://image.tmdb.org/t/p/w500/${e.logo_path}`} width="50px" height="30" alt={e.id} />
-                        </li>)
-                    })}
-                </ul>
-            </h4>
+                        <Select
+                            defaultValue={options[0]}
+                            onChange={(e) => {
+                                setRate(e.value)
+                            }}
+                            options={options}
+
+                        />
+
+                        <Button variant="outline-primary" onClick={() => {
+                            onClickHandler()
+                        }} style={{
+                            marginTop: '2em'
+                        }}>Submit</Button>
+                    </div>
+
+                </div>
+
+            </div>
         </>
         );
     }
+
     return (
         <div>
 

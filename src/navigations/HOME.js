@@ -1,26 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { NEXT_PAGE, PRE_PAGE, RESET } from '../actions/pageChangeAction'
+
 import Select from 'react-select'
 import axios from 'axios'
 import Card from '../components/Card';
 
+
 //CSS
 import '../styles/Home.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button'
 
 function HOME() {
 
     const isLogged = useSelector(state => state.LogReducer);
     const currentPage = useSelector(state => state.PageReducer);
-
+    const dispatch = useDispatch();
 
     const [pageresult, setPageresult] = useState([]);
     const [cateResult, setCateresult] = useState('now_playing');
     const [dataLoad, setDataLoad] = useState(false);
 
-    const dispatch = useDispatch();
     const api_key = 'dd32c1edcdcaa2ef3be79570c191e5ea';
-
     const options = [
         { value: 'now_playing', label: 'NowPlaying' },
         { value: 'top_rated', label: 'Top Rated' },
@@ -28,14 +30,8 @@ function HOME() {
         { value: 'upcoming', label: 'Upcoming' }
     ];
 
-    console.log(isLogged);
     useEffect(() => {
-        // Update the document title using the browser API
-        // console.log(isLogged);
-
-        console.log(`Current Page # : ${currentPage}`);
-        console.log(`Current Cate : ${cateResult}`)
-
+        console.log(isLogged);
         fetchData();
         async function fetchData() {
 
@@ -72,29 +68,48 @@ function HOME() {
         }
 
 
-    }, [currentPage, cateResult]);
+    }, [currentPage, cateResult, isLogged]);
 
     return (
-        <div>This is the home page
+        <div>
+            <div className='row' style={
+                {
+                    paddingTop: '20px',
+                    paddingBottom: '20px',
+                    paddingLeft: '10px'
+                }
+            }>
+                <div style={
+                    {
+                        alignContent: 'center'
+                    }
+                } className='col-3'>
+                    <Select
+                        defaultValue={options[0]}
+                        onChange={(e) => {
+                            setCateresult(e.value)
+                            dispatch(RESET())
+                        }}
+                        options={options} />
+                </div>
 
-            <Select
-                defaultValue={options[0]}
-                onChange={(e) => {
-                    setCateresult(e.value)
-                    dispatch(RESET())
-                }}
-                options={options}
-            />
 
-            <h2>{currentPage}</h2>
 
-            <button onClick={() => { if (!(currentPage <= 1)) { dispatch(PRE_PAGE()) } }}>
-                Previous Page
-            </button>
+                <div className='col-3' style={{
+                    textAlign: 'right'
+                }}>
+                    <Button variant="outline-primary" onClick={() => { if (!(currentPage <= 1)) { dispatch(PRE_PAGE()) } }}> Previous Page </Button >
+                </div>
 
-            <button onClick={() => dispatch(NEXT_PAGE())}>
-                NEXT PAGE
-            </button>
+                <div className='col-3' style={{
+                    textAlign: 'center'
+                }}><h2>{currentPage}</h2></div>
+
+                <div className='col-3' >
+                    <Button variant="outline-primary" onClick={() => dispatch(NEXT_PAGE())} >NEXT PAGE</Button>
+                </div>
+
+            </div>
 
             {dataLoad ? <ul className='myList'>
                 {pageresult.map(movie => {
@@ -102,7 +117,8 @@ function HOME() {
                 })}
             </ul> : null}
 
-        </div>);
+        </div>
+    );
 }
 
 export default HOME;
