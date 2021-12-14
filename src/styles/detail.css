@@ -1,0 +1,37 @@
+.wrapper {
+    /* border-style         : dashed; */
+    display              : grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap             : 1em;
+}
+
+.wrapper>div {
+    /* border-style  : solid; */
+    padding       : 2em;
+    grid-auto-rows: minmax(100px, auto);
+}
+
+.detailImg {
+    grid-column: 1/2;
+    grid-row   : 1/2;
+}
+
+.detailOverview {
+    grid-column: 2/4;
+    grid-row   : 1/2;
+}
+
+.detailRating{
+    grid-column: 3/4;
+    grid-row: 2/3;
+}
+
+.detailTitle {
+    grid-row: 2/3;
+}
+
+.detailMap{
+    grid-column: 2/3;
+    grid-row: 2/3;
+}
+

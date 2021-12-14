@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import Select from 'react-select'
 import { RATE } from '../actions/rateAction';
 import { useDispatch } from 'react-redux'
+import Select from 'react-select'
+//CSS
+import '../styles/detail.css'
 
 function Detail(props) {
 
@@ -33,7 +35,7 @@ function Detail(props) {
 
     }, []);
 
- 
+
     function onClickHandler() {
         console.log(rate)
         if (rate !== null) {
@@ -43,37 +45,62 @@ function Detail(props) {
 
     function showDetail() {
         return (<>
-            <img src={`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`} width="400px" height="707px" alt={data.id} />
+            <div className="wrapper">
+                <div className="detailImg"><img src={`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`} alt={data.id} /></div>
+                <div className="detailTitle">
+                    <h2>{data.original_title}</h2>
+                    <h4>Release data :
+                        {data.release_date}
+                    </h4>
+                </div>
+                <div className='detailOverview'>
+                    <h4>Overview:<br />
+                        {data.overview}
+                    </h4>
+                </div>
 
-            <h1>{data.original_title}</h1>
+                <div className='detailMap'>
+                    <h4>Genres:
+                        <ul>
+                            {data.genres.map(e => {
+                                return <li key={e.id}>{e.name}</li>
+                            })}
+                        </ul>
+                    </h4>
+                    <br />
+                    <h4>Production Companies:
+                        <ul>
+                            {data.production_companies.map(e => {
+                                return (<li key={e.id}>
+                                    {e.name}
+                                    <img src={`https://image.tmdb.org/t/p/w500/${e.logo_path}`} width="50px" height="30" alt={e.id} />
+                                </li>)
+                            })}
+                        </ul>
+                    </h4>
+                </div>
+                <div className='detailRating'>
+                    <h4>Average Rating:
+                    {data.vote_average}
+                </h4>
+                    <Select
+                        defaultValue={options[0]}
+                        onChange={(e) => {
+                            setRate(e.value)
+                        }}
+                        options={options}
+                    />
+                    <button onClick={() => {
+                        onClickHandler()
+                    }}>Submit</button>
+                </div>
 
-            <h4>Release data :
-                {data.release_date}
-            </h4>
 
-            <h4>Overview:
-                {data.overview}
-            </h4>
 
-            <h4>Genres:
-                <ul>
-                    {data.genres.map(e => {
-                        return <li key={e.id}>{e.name}</li>
-                    })}
-                </ul>
-            </h4>
+            </div>
 
-            <h4>Average Rating:
-                {data.vote_average}
-            </h4>
+            {/* 
 
-            <Select
-                defaultValue={options[0]}
-                onChange={(e) => {
-                    setRate(e.value)
-                }}
-                options={options}
-            />
 
             <button onClick={() => {
                 onClickHandler()
@@ -88,10 +115,11 @@ function Detail(props) {
                         </li>)
                     })}
                 </ul>
-            </h4>
+            </h4> */}
         </>
         );
     }
+
     return (
         <div>
 
